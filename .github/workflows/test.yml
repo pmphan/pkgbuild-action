@@ -1,0 +1,31 @@
+name: Test
+
+on: [push, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pkgname: [yay, neovim-git]
+    steps:
+      - name: Checkout action repo
+        uses: actions/checkout@v4
+      - name: Clone test repo
+        run: git clone --depth=1 https://aur.archlinux.org/${{ matrix.pkgname }}.git
+      - name: Make packages
+        uses: ./
+        id: makepkg
+        with:
+          path: ${{ matrix.pkgname }}
+      - name: Upload package
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.pkgname }}-package-${{ github.run_id }}
+          path: ${{ steps.makepkg.outputs.pkgfile }}
+      - name: Upload directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.pkgname }}-directory-${{ github.run_id }}
+          path: ${{ matrix.pkgname }}/**

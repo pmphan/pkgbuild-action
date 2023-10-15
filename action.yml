@@ -1,0 +1,22 @@
+name: PKGBUILD Action
+author: Phuong Phan
+description: Build AUR package and generate .SRCINFO
+
+branding:
+  icon: package
+  color: blue
+
+inputs:
+  path:
+    description: "Path to PKGBUILD directory."
+    required: true
+
+outputs:
+  pkgfile:
+    description: "Filename of built package."
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.path }}
