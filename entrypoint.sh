@@ -57,6 +57,7 @@ echo "::endgroup::"
 
 echo "::group::Generate .SRCINFO"
 makepkg --printsrcinfo > .SRCINFO
+sudo mv .SRCINFO ${abspath}
 echo "::endgroup::"
 
 echo "::group::Remove namcap, git and yay"
