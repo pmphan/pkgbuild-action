@@ -21,7 +21,7 @@ Outputs
   with:
     path: pkgname
 - name: Upload package
-  uses: actions/upload-artifact@v3
+  uses: actions/upload-artifact@v4
   with:
     path: ${{ steps.makepkg.outputs.pkgfile }}
 ```
